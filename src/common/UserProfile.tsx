@@ -84,7 +84,7 @@ export default function UserProfile({ className }: UserProfileProps) {
 
       {/* Dropdown Menu - Light Theme Aesthetic */}
       {isOpen && (
-        <div className="absolute right-0 mt-3 w-64 bg-primary-background rounded-2xl shadow-xl border border-border overflow-hidden z-[100] animate-in fade-in zoom-in-95 duration-200">
+        <div className="absolute right-0 mt-3 w-72 bg-primary-background rounded-2xl shadow-xl border border-border overflow-hidden z-[100] animate-in fade-in zoom-in-95 duration-200">
           {/* Header */}
           <div className="p-4 bg-light-background border-b border-border">
             <div className="flex items-center gap-3">
@@ -101,8 +101,8 @@ export default function UserProfile({ className }: UserProfileProps) {
           {/* Links */}
           <div className="p-2 space-y-0.5">
             <DropdownLink to="/admin" icon={LayoutDashboard} label="Dashboard" onClick={() => setIsOpen(false)} iconColor="text-blue-500" bgColor="bg-blue-500/10" />
-            <DropdownLink to="/profile" icon={User} label="My Profile" onClick={() => setIsOpen(false)} iconColor="text-primary-brand" bgColor="bg-primary-brand/10" />
-            <DropdownLink to="/settings" icon={Settings} label="Settings" onClick={() => setIsOpen(false)} iconColor="text-primary-brand" bgColor="bg-primary-brand/10" />
+            <DropdownLink to="/profile" icon={User} label="My Profile" onClick={() => setIsOpen(false)} iconColor="text-violet-500" bgColor="bg-violet-500/10" />
+            <DropdownLink to="/settings" icon={Settings} label="Settings" onClick={() => setIsOpen(false)} iconColor="text-amber-500" bgColor="bg-amber-500/10" />
             <DropdownLink to="/user-activity-log" icon={Activity} label="Activity Log" onClick={() => setIsOpen(false)} iconColor="text-emerald-500" bgColor="bg-emerald-500/10" />
           </div>
 
