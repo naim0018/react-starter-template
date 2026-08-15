@@ -67,10 +67,10 @@ export default function UserProfile({ className }: UserProfileProps) {
           />
         </div>
         <div className="hidden lg:flex flex-col items-start">
-          <span className="text-[13px] font-bold text-primary-text leading-none mb-0.5">
+          <span className="text-sm font-semibold text-primary-text leading-none mb-0.5">
             {displayName}
           </span>
-          <span className="text-[9px] text-secondary-text uppercase tracking-wider font-extrabold">
+          <span className="text-xs text-secondary-text uppercase tracking-wider font-semibold">
             {displayRole}
           </span>
         </div>
@@ -92,7 +92,7 @@ export default function UserProfile({ className }: UserProfileProps) {
                 <img src={displayImage} alt={displayName} className="w-full h-full object-cover" />
               </div>
               <div className="flex flex-col min-w-0">
-                <span className="text-sm font-bold text-primary-text truncate">{displayName}</span>
+                <span className="text-sm font-semibold text-primary-text truncate">{displayName}</span>
                 <span className="text-xs text-secondary-text truncate">{displayEmail}</span>
               </div>
             </div>
@@ -115,7 +115,7 @@ export default function UserProfile({ className }: UserProfileProps) {
               <div className="w-8 h-8 rounded-lg bg-red-100/50 flex items-center justify-center group-hover:bg-red-100 transition-colors">
                 <Power className="w-3.5 h-3.5" />
               </div>
-              <span className="text-[13px] font-bold">Logout Session</span>
+              <span className="text-sm font-semibold">Logout Session</span>
             </button>
           </div>
         </div>
@@ -143,7 +143,7 @@ function DropdownLink({ to, icon: Icon, label, onClick, iconColor, bgColor }: Dr
       <div className={cn("w-8 h-8 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform duration-200", bgColor)}>
         <Icon className={cn("w-4 h-4", iconColor)} />
       </div>
-      <span className="text-[13px] font-semibold">{label}</span>
+      <span className="text-sm font-semibold">{label}</span>
       <ChevronDown className="w-3 h-3 ml-auto opacity-0 -rotate-90 group-hover:opacity-40 transition-all duration-200" />
     </Link>
   );
