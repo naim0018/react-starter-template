@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 const exactMatchPaths = ["/admin", "/user"];
 
 // Clean, tech-styled logo that matches the site's dark slate & blue theme
-const SeeSayDoLogo = ({ collapsed }: { collapsed: boolean }) => {
+const BaseKitLogo = ({ collapsed }: { collapsed: boolean }) => {
   if (collapsed) {
     return (
       <div className="flex flex-col items-center justify-center w-full py-1">
@@ -27,13 +27,12 @@ const SeeSayDoLogo = ({ collapsed }: { collapsed: boolean }) => {
       </svg>
       <div className="flex flex-col">
         <div className="text-lg tracking-tight leading-none text-white font-medium flex items-baseline">
-          <span>See</span>
-          <span className="font-semibold text-blue-500">Say</span>
-          <span>Do</span>
+          <span>Base</span>
+          <span className="font-semibold text-blue-500">Kit</span>
           <span className="text-[7px] font-normal align-super ml-0.5 opacity-80">TM</span>
         </div>
         <span className="text-[7px] font-semibold tracking-wider text-slate-400 uppercase mt-0.5">
-          Player Development
+          Admin Template
         </span>
       </div>
     </div>
@@ -83,7 +82,7 @@ const SidebarItem = ({ item, location }: { item: MenuItem; location: Location })
             />
           </button>
           {isOpen && (
-            <div className="mt-1 pl-4 space-y-1 border-l border-white/10 ml-6 animate-in slide-in-from-top-1 duration-200">
+            <div className="mt-1 pl-4 space-y-2 border-l border-white/10 ml-6 animate-in slide-in-from-top-1 duration-200">
               {item.children!.map((child) => (
                 <SidebarItem key={child.path} item={child} location={location} />
               ))}
@@ -140,10 +139,10 @@ const Sidebar = () => {
         isCollapsed ? "w-20" : "w-64"
       )}
     >
-      {/* Floating Collapse/Expand Button aligned with Header Center */}
+      {/* Floating Collapse/Expand Button aligned exactly on the border intersection */}
       <button
         onClick={toggleCollapse}
-        className="absolute right-[-12px] top-10 z-50 transform -translate-y-1/2 w-6 h-6 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center cursor-pointer shadow-md hover:border-slate-500 transition-colors text-slate-400 hover:text-white focus:outline-none"
+        className="absolute right-[-12px] top-16 z-50 transform -translate-y-1/2 w-6 h-6 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center cursor-pointer shadow-md hover:border-slate-500 transition-colors text-slate-400 hover:text-white focus:outline-none"
       >
         {isCollapsed ? (
           <ChevronRight className="w-3.5 h-3.5" />
@@ -152,9 +151,9 @@ const Sidebar = () => {
         )}
       </button>
 
-      {/* Sidebar Header with Site-styled SeeSayDo Logo */}
-      <div className="h-20 flex items-center justify-center border-b border-slate-800 px-4">
-        <SeeSayDoLogo collapsed={isCollapsed} />
+      {/* Sidebar Header with Site-styled BaseKit Logo - h-16 to align with Top Header */}
+      <div className="h-16 flex items-center justify-center border-b border-slate-800 px-4">
+        <BaseKitLogo collapsed={isCollapsed} />
       </div>
 
       {/* Navigation Groups */}
@@ -166,7 +165,7 @@ const Sidebar = () => {
                 {group}
               </span>
             )}
-            <div className="space-y-1">
+            <div className="space-y-2">
               {items.map((item) =>
                 isCollapsed ? (
                   <Link
