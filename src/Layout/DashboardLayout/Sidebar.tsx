@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { adminRoutes } from "@/routes/AdminRoutes";
@@ -8,36 +8,33 @@ import { cn } from "@/lib/utils";
 
 const exactMatchPaths = ["/admin", "/user"];
 
+// Clean, tech-styled logo that matches the site's dark slate & blue theme
 const SeeSayDoLogo = ({ collapsed }: { collapsed: boolean }) => {
   if (collapsed) {
     return (
       <div className="flex flex-col items-center justify-center w-full py-1">
-        <svg viewBox="0 0 100 40" className="w-10 h-5" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M 15 30 Q 35 10 55 30" stroke="#38bdf8" strokeWidth="4.5" strokeLinecap="round" />
-          <path d="M 35 30 Q 55 10 75 30" stroke="#4ade80" strokeWidth="4.5" strokeLinecap="round" />
-          <path d="M 55 30 Q 75 10 95 30" stroke="#f97316" strokeWidth="4.5" strokeLinecap="round" />
+        <svg viewBox="0 0 24 24" className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" strokeWidth="2.5">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col items-center justify-center py-1 select-none">
-      <svg viewBox="0 0 160 45" className="w-32 h-8" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M 30 35 Q 55 12 80 35" stroke="#38bdf8" strokeWidth="3.5" strokeLinecap="round" />
-        <path d="M 50 35 Q 75 12 100 35" stroke="#4ade80" strokeWidth="3.5" strokeLinecap="round" />
-        <path d="M 70 35 Q 95 12 120 35" stroke="#f97316" strokeWidth="3.5" strokeLinecap="round" />
+    <div className="flex items-center gap-3 py-1 select-none">
+      <svg viewBox="0 0 24 24" className="w-7 h-7 text-blue-500" fill="none" stroke="currentColor" strokeWidth="2.5">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
-      
-      <div className="text-lg tracking-tight leading-none text-white font-medium flex items-baseline mt-1">
-        <span>See</span>
-        <span className="font-semibold text-white">Say</span>
-        <span>Do</span>
-        <span className="text-[7px] font-normal align-super ml-0.5 opacity-80">TM</span>
-      </div>
-      
-      <div className="text-[6px] font-semibold tracking-[0.15em] text-orange-500 uppercase mt-1">
-        A Player Development System
+      <div className="flex flex-col">
+        <div className="text-lg tracking-tight leading-none text-white font-medium flex items-baseline">
+          <span>See</span>
+          <span className="font-semibold text-blue-500">Say</span>
+          <span>Do</span>
+          <span className="text-[7px] font-normal align-super ml-0.5 opacity-80">TM</span>
+        </div>
+        <span className="text-[7px] font-semibold tracking-wider text-slate-400 uppercase mt-0.5">
+          Player Development
+        </span>
       </div>
     </div>
   );
@@ -71,7 +68,7 @@ const SidebarItem = ({ item, location }: { item: MenuItem; location: Location })
           <button
             onClick={() => setIsOpen(!isOpen)}
             className={cn(
-              "flex items-center justify-between w-full px-4 py-2.5 text-[13px] font-semibold rounded-xl transition-all duration-200 group text-white/70 hover:bg-white/10 hover:text-white"
+              "flex items-center justify-between w-full h-10 px-4 text-base font-semibold rounded-xl transition-all duration-200 group text-white/70 hover:bg-white/10 hover:text-white"
             )}
           >
             <div className="flex items-center gap-3">
@@ -97,7 +94,7 @@ const SidebarItem = ({ item, location }: { item: MenuItem; location: Location })
         <NavLink
           to={item.path || "#"}
           className={cn(
-            "flex items-center gap-3 px-4 py-2.5 text-[13px] font-semibold rounded-xl transition-all duration-200 no-underline!",
+            "flex items-center gap-3 px-4 h-10 text-base font-semibold rounded-xl transition-all duration-200 no-underline!",
             isActive
               ? "bg-white text-slate-900 shadow-sm"
               : "text-white/70 hover:bg-white/10 hover:text-white"
@@ -143,10 +140,10 @@ const Sidebar = () => {
         isCollapsed ? "w-20" : "w-64"
       )}
     >
-      {/* Floating Collapse/Expand Button */}
+      {/* Floating Collapse/Expand Button aligned with Header Center */}
       <button
         onClick={toggleCollapse}
-        className="absolute right-[-12px] top-8 z-50 transform -translate-y-1/2 w-6 h-6 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center cursor-pointer shadow-md hover:border-orange-500 transition-colors text-orange-500 hover:text-orange-400 focus:outline-none"
+        className="absolute right-[-12px] top-10 z-50 transform -translate-y-1/2 w-6 h-6 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center cursor-pointer shadow-md hover:border-slate-500 transition-colors text-slate-400 hover:text-white focus:outline-none"
       >
         {isCollapsed ? (
           <ChevronRight className="w-3.5 h-3.5" />
@@ -155,7 +152,7 @@ const Sidebar = () => {
         )}
       </button>
 
-      {/* Sidebar Header with SeeSayDo Logo */}
+      {/* Sidebar Header with Site-styled SeeSayDo Logo */}
       <div className="h-20 flex items-center justify-center border-b border-slate-800 px-4">
         <SeeSayDoLogo collapsed={isCollapsed} />
       </div>
@@ -176,7 +173,7 @@ const Sidebar = () => {
                     key={item.path}
                     to={item.path || "#"}
                     className={cn(
-                      "flex items-center justify-center p-3 rounded-xl transition-all duration-200 hover:bg-slate-800",
+                      "flex items-center justify-center h-10 rounded-xl transition-all duration-200 hover:bg-slate-800",
                       isRouteActive(item, location.pathname)
                         ? "bg-white text-slate-900 shadow-sm"
                         : "text-white/70 hover:text-white"
