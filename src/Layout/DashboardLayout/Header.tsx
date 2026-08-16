@@ -111,7 +111,7 @@ const Header = ({ title, description, onMenuClick }: HeaderProps) => {
   };
 
   return (
-    <header className="h-20 bg-primary-background border-b border-border sticky top-0 z-30 flex items-center">
+    <header className="h-20 bg-primary-background sticky top-0 z-30 flex items-center mx-6 rounded-b-xl shadow-md">
       <div className="flex items-center justify-between w-full px-6">
         {/* Left Side: Hamburger & Title & Description */}
         <div className="flex items-center gap-3 md:gap-4 min-w-0">

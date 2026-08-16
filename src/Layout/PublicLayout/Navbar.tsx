@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import UserProfile from "@/common/UserProfile";
 import NavItems from "./NavItems";
 import { ThemeToggle } from "@/common/ThemeToggle";
+import Logo from "@/common/Logo";
 import { 
   Bell, 
   BellOff, 
@@ -112,9 +113,8 @@ const Navbar: React.FC = () => {
         <div className="w-full flex items-center justify-between">
           {/* Logo Only */}
           <div className="flex items-center">
-            <Link to="/" className="text-xl font-bold text-slate-800 dark:text-white flex items-center no-underline hover:opacity-90">
-              <span>Base</span>
-              <span className="text-blue-500">Kit</span>
+            <Link to="/" className="no-underline hover:opacity-90">
+              <Logo />
             </Link>
           </div>
 

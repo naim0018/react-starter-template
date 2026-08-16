@@ -5,29 +5,11 @@ import { adminRoutes } from "@/routes/AdminRoutes";
 import { menuGenerator, MenuItem } from "@/utils/Generator/MenuGenerator";
 import { Location } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import Logo from "@/common/Logo";
 
 const exactMatchPaths = ["/admin", "/user"];
 
-// Clean, tech-styled logo that matches the site's light & blue theme
-const BaseKitLogo = ({ collapsed }: { collapsed: boolean }) => {
-  return (
-    <div className="flex items-center gap-3 py-1 select-none w-full justify-center md:justify-start">
-      <svg viewBox="0 0 24 24" className="w-7 h-7 text-blue-500 shrink-0" fill="none" stroke="currentColor" strokeWidth="2.5">
-        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-      <div className={cn("flex flex-col transition-all duration-200", collapsed ? "md:hidden" : "block")}>
-        <div className="text-lg tracking-tight leading-none text-primary-text font-medium flex items-baseline">
-          <span>Base</span>
-          <span className="font-semibold text-blue-500">Kit</span>
-          <span className="text-xs font-normal align-super ml-0.5 opacity-80">TM</span>
-        </div>
-        <span className="text-xs font-semibold tracking-wider text-muted-blue uppercase mt-0.5">
-          Admin Template
-        </span>
-      </div>
-    </div>
-  );
-};
+
 
 const isRouteActive = (item: MenuItem, currentPath: string): boolean => {
   if (!item.path) return false;
@@ -173,7 +155,7 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }: SidebarProps) => {
   return (
     <aside
       className={cn(
-        "bg-primary-background text-primary-text h-screen flex flex-col transition-all duration-300 z-50 border-r border-border shrink-0",
+        "bg-primary-background text-primary-text h-screen flex flex-col transition-all duration-300 z-50 shrink-0 shadow-lg",
         // Desktop layouts
         "md:sticky md:top-0 md:translate-x-0",
         showCollapsed ? "md:w-20" : "md:w-[280px]",
@@ -195,8 +177,8 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }: SidebarProps) => {
       </button>
 
       {/* Sidebar Header with Site-styled BaseKit Logo - h-20 to align with Top Header */}
-      <div className="h-20 flex items-center justify-center border-b border-border px-4 shrink-0">
-        <BaseKitLogo collapsed={showCollapsed} />
+      <div className={cn("h-20 flex items-center justify-center border-b border-border shrink-0", showCollapsed ? "px-1" : "px-4")}>
+        <Logo collapsed={showCollapsed} className="w-full justify-center md:justify-start" />
       </div>
 
       {/* Navigation Groups */}
@@ -244,7 +226,7 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }: SidebarProps) => {
       </nav>
 
       {/* User Profile Card at Bottom */}
-      <div className="p-4 border-t border-border mt-auto shrink-0">
+      <div className="p-4 pb-6 border-t border-border mt-auto shrink-0">
         {showCollapsed ? (
           <div className="flex flex-col items-center gap-4">
             <img
