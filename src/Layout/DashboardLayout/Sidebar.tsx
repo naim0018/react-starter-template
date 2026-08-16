@@ -197,7 +197,7 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }: SidebarProps) => {
                     key={item.path}
                     to={item.path || "#"}
                     className={cn(
-                      "flex items-center justify-center h-12 rounded-xl transition-all duration-200",
+                      "flex items-center justify-center h-12 p-6 rounded-xl transition-all duration-200",
                       isRouteActive(item, location.pathname)
                         ? "bg-brand-gradient text-white"
                         : "text-muted-blue hover:bg-light-background hover:text-primary-text"
