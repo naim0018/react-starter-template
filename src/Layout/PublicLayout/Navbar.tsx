@@ -114,7 +114,7 @@ const Navbar: React.FC = () => {
           {/* Logo Only */}
           <div className="flex items-center">
             <Link to="/" className="no-underline hover:opacity-90">
-              <Logo />
+              <Logo className="w-40 md:w-56" />
             </Link>
           </div>
 

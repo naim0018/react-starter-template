@@ -1,21 +1,17 @@
-import {
-  ChartPie,
-  Backpack,
-  Users,
-  Megaphone,
-  Building2,
-  Store,
-  LayoutGrid,
-  BriefcaseBusiness,
-  FileChartColumnIncreasing,
-  Grid2x2,
-  Clipboard,
-  Info,
-} from "lucide-react";
-import { IoExtensionPuzzleOutline, IoSettingsOutline } from "react-icons/io5";
-
 import { lazy } from "react";
 import { Outlet } from "react-router-dom";
+import {
+  ChartPie,
+  FileText,
+  List,
+  Package,
+  Users,
+  User,
+  Network,
+  Headphones,
+} from "lucide-react";
+import { IoSettingsOutline } from "react-icons/io5";
+
 import Loadable from "@/utils/Loadable";
 import { AdminSkeleton } from "@/common/Skeleton/Admin/AdminSkeleton";
 
@@ -28,20 +24,7 @@ const Settings = Loadable(
   AdminSkeleton
 );
 
-// Placeholder Loadable components
-const Overview = AdminDashboard;
-const Works = AdminDashboard;
-const Employees = AdminDashboard;
-const MarketingStrategy = AdminDashboard;
-const AlfalaBuilders = AdminDashboard;
-const TimosSuperShop = AdminDashboard;
-const AllProgram = AdminDashboard;
-const ProgramBuilder = AdminDashboard;
-const ProgramName = AdminDashboard;
-const ProjectReview = AdminDashboard;
-const ProjectBuilder = AdminDashboard;
-const ActivityLog = AdminDashboard;
-const Help = AdminDashboard;
+const DummyPage = AdminDashboard;
 
 export const adminRoutes = [
   {
@@ -51,153 +34,71 @@ export const adminRoutes = [
         icon: <ChartPie />,
         name: "Overview",
         path: "overview",
+        element: <AdminDashboard />,
+      },
+      {
+        icon: <FileText />,
+        name: "Reports",
+        path: "reports",
         element: <Outlet />,
         children: [
-          {
-            icon: <ChartPie />,
-            name: "Overview",
-            index:true,
-            element: <Overview />,
-          },
-          {
-            icon: <ChartPie />,
-            name: "User Profile1",
-            path: "user-profile1",
-            element: <Overview />,
-          },
-          {
-            icon: <ChartPie />,
-            name: "User Profile 2",
-            path: "user-profile2",
-            element: <Overview />,
-          },
-          {
-            icon: <ChartPie />,
-            name: "User Profile 3",
-            path: "user-profile3",
-            element: <Overview />,
-            children: [
-              {
-                icon: <ChartPie />,
-                name: "User Profile 4",
-                path: "user-profile4",
-                element: <Overview />,
-                children: [
-                  {
-                    icon: <ChartPie />,
-                    name: "User Profile 5",
-                    path: "user-profile5",
-                    element: <Overview />,
-                    children: [
-                      {
-                        name: "User Profile 6",
-                        path: "user-profile6",
-                        element: <Overview />,
-                      },
-                    ],
-                  },
-                ],
-              },
-              {
-                icon: <ChartPie />,
-                name: "User Profile 7",
-                path: "user-profile7",
-                element: <Overview />,
-              },
-            ],
-          },
+          { name: "All Reports", path: "all", element: <DummyPage /> }
         ],
       },
       {
-        icon: <Backpack />,
-        name: "Works",
-        path: "works",
-        element: <Works />,
+        icon: <List />,
+        name: "Items",
+        path: "items",
+        element: <Outlet />,
+        children: [
+          { name: "All Items", path: "all", element: <DummyPage /> }
+        ],
+      },
+      {
+        icon: <Package />,
+        name: "Inventory",
+        path: "inventory",
+        element: <Outlet />,
+        children: [
+          { name: "Current Inventory", path: "current", element: <DummyPage /> }
+        ],
       },
       {
         icon: <Users />,
         name: "Employees",
         path: "employees",
-        element: <Employees />,
-      },
-    ],
-  },
-  {
-    group: "Favorites",
-    items: [
-      {
-        icon: <Megaphone />,
-        name: "Marketing Strategy",
-        path: "marketing-strategy",
-        element: <MarketingStrategy />,
+        element: <Outlet />,
+        children: [
+          { name: "All Employees", path: "all", element: <DummyPage /> }
+        ],
       },
       {
-        icon: <Building2 />,
-        name: "Alfala Building",
-        path: "alfala-building",
-        element: <AlfalaBuilders />,
+        icon: <User />,
+        name: "Customers",
+        path: "customers",
+        element: <DummyPage />,
       },
       {
-        icon: <Store />,
-        name: "Timo's Super Shop",
-        path: "timos-super-shop",
-        element: <TimosSuperShop />,
-      },
-    ],
-  },
-  {
-    group: "Programs & Projects",
-    items: [
-      {
-        icon: <LayoutGrid />,
-        name: "All Program",
-        path: "all-program",
-        element: <AllProgram />,
+        icon: <Network />,
+        name: "Integrations",
+        path: "integrations",
+        element: <Outlet />,
+        children: [
+          { name: "Active Integrations", path: "active", element: <DummyPage /> }
+        ],
       },
       {
-        icon: <IoExtensionPuzzleOutline className="size-6" />,
-        name: "Program Builder",
-        path: "program-builder",
-        element: <ProgramBuilder />,
-      },
-      {
-        icon: <BriefcaseBusiness />,
-        name: "Program Name",
-        path: "program-name",
-        element: <ProgramName />,
-      },
-      {
-        icon: <FileChartColumnIncreasing />,
-        name: "Project Review",
-        path: "project-review",
-        element: <ProjectReview />,
-      },
-      {
-        icon: <Grid2x2 />,
-        name: "Project Builder",
-        path: "project-builder",
-        element: <ProjectBuilder />,
-      },
-    ],
-  },
-  {
-    group: "Support",
-    items: [
-      {
-        icon: <Clipboard />,
-        name: "Activity Log",
-        path: "activity-log",
-        element: <ActivityLog />,
-      },
-      {
-        icon: <Info />,
+        icon: <Headphones />,
         name: "Help",
         path: "help",
-        element: <Help />,
+        element: <Outlet />,
+        children: [
+          { name: "Support Center", path: "support", element: <DummyPage /> }
+        ],
       },
       {
         icon: <IoSettingsOutline className="size-6" />,
-        name: "Settings",
+        name: "settings",
         path: "settings",
         element: <Settings />,
       },

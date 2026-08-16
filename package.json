@@ -7,12 +7,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mdkazinaim/starter-template-react-typescript.git"
+    "url": "git+https://github.com/naim0018/react-starter-template.git"
   },
   "bugs": {
-    "url": "https://github.com/mdkazinaim/starter-template-react-typescript/issues"
+    "url": "https://github.com/naim0018/react-starter-template/issues"
   },
-  "homepage": "https://github.com/mdkazinaim/starter-template-react-typescript#readme",
+  "homepage": "https://github.com/naim0018/react-starter-template#readme",
   "keywords": [
     "react",
     "typescript",
