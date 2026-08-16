@@ -1,16 +1,14 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { routesGenerator } from "@/utils/Generator/RoutesGenerator";
 
 // [ADMIN_MODULE_START]
 import { adminRoutes } from "./AdminRoutes";
 import DashboardLayout from "@/Layout/DashboardLayout/DashboardLayout";
-const AdminDashboard = lazy(() => import("@/pages/Admin/Dashboard/AdminDashboard"));
 // [ADMIN_MODULE_END]
 
 // [USER_MODULE_START]
 import { userRoutes } from "./UserRoutes";
-const UserDashboard = lazy(() => import("@/pages/UserDashboard/UserDashboard"));
 // [USER_MODULE_END]
 
 // [PUBLIC_MODULE_START]
@@ -62,7 +60,7 @@ const routes = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <AdminDashboard />,
+        element: <Navigate to="/admin/overview"/>,
       },
       ...routesGenerator(adminRoutes),
     ],
@@ -80,7 +78,7 @@ const routes = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <UserDashboard />,
+        element: <Navigate to="/user/overview"/>,
       },
       ...routesGenerator(userRoutes),
     ],

@@ -45,7 +45,7 @@ export default function UserProfile({ className }: UserProfileProps) {
       dispatch(logOut());
       toast.success("Logout successful");
       setIsOpen(false);
-      navigate("/login");
+      navigate("/");
     } catch {
       toast.error("Logout failed");
     }

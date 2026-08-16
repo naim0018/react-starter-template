@@ -178,7 +178,9 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }: SidebarProps) => {
 
       {/* Sidebar Header with Site-styled BaseKit Logo - h-20 to align with Top Header */}
       <div className={cn("h-20 flex items-center justify-center border-b border-border shrink-0", showCollapsed ? "px-1" : "px-4")}>
-        <Logo collapsed={showCollapsed} className="w-full justify-center md:justify-start" />
+        <Link to={menu[0]?.path || "/"} className="w-full no-underline outline-none">
+          <Logo collapsed={showCollapsed} className="w-full justify-center md:justify-start" />
+        </Link>
       </div>
 
       {/* Navigation Groups */}
@@ -251,7 +253,10 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }: SidebarProps) => {
                 <span className="text-xs text-muted-blue leading-tight mt-0.5">Manager Admin</span>
               </div>
             </div>
-            <button className="text-muted-blue hover:text-red-500 transition-colors cursor-pointer">
+            <button 
+              onClick={() => window.location.href = "/"}
+              className="text-muted-blue hover:text-red-500 transition-colors cursor-pointer"
+            >
               <LogOut className="w-4 h-4" />
             </button>
           </div>

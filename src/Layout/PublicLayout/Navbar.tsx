@@ -108,7 +108,7 @@ const Navbar: React.FC = () => {
   return (
     <>
       {/* Top Header Navbar */}
-      <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 sticky top-0 z-40 h-20 flex items-center">
+      <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 sticky top-0 z-40 h-20 flex items-center shadow-sm">
       <CommonWrapper className="flex items-center w-full px-4 xl:px-0">
         <div className="w-full flex items-center justify-between">
           {/* Logo Only */}
