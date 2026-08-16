@@ -1,14 +1,12 @@
-import CommonWrapper from "@/common/CommonWrapper"
-import WorkInProgress from "@/common/WorkInProgress"
+import WorkInProgress from "@/common/WorkInProgress";
+import CommonWrapper from "@/common/CommonWrapper";
 
 const Contact = () => {
   return (
     <CommonWrapper>
-      <div className="min-h-[90vh] flex items-center justify-center">
-        <WorkInProgress title="Contact Page" />
-      </div>
+      <WorkInProgress title="Contact Page" />
     </CommonWrapper>
-  )
-}
+  );
+};
 
-export default Contact
+export default Contact;

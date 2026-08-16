@@ -217,3 +217,36 @@ Tailwind text utilities only. No `px` sizes, no inline `style={{ fontSize }}`:
 - Endpoint names must be **globally unique** across all `injectEndpoints` calls on `baseApi`.
 - Prefix role-specific endpoints: `updateScoutProfile`, `updatePlayerProfile`, `updateClubProfile`.
 - Never use a generic name like `updateProfile` unless it is the only profile endpoint in the entire app.
+
+---
+
+## 15. Refined UI/UX Style Rules (Update)
+
+- **Color Tokens**:
+  - Main background or layout background: `#F6F9FF` (CSS variable `--layout-bg`).
+  - Sidebar background: `#FFFFFF` (white).
+  - Inactive text/icon color: `#8188A2` (CSS variable `--muted-blue`).
+- **Dashboard Layout heights & positioning**:
+  - Dashboard Header height: `h-20` (80px) for both the header and the sidebar logo container.
+  - Floating Collapse Button alignment: Position exactly `top-20` (80px) from the top (aligned exactly on the header bottom border line intersection).
+  - Page Titles: Do NOT render page titles inside the main page body. Page titles and descriptions must be rendered inside the `Header` component. Font weight for titles must be `semibold` (e.g. `font-semibold`), not `bold` or `black`.
+  - Layout Viewport Lock: Parent layout must enforce `h-screen overflow-hidden`. The Topbar and Sidebar must remain fixed, and only the main body `<main className="overflow-y-auto">` scrolls.
+- **Shadows & Borders Constraint**:
+  - Do NOT use shadows if you are using borders, and do NOT use borders if you are using shadows. (e.g., headers, profile cards, and dropdown triggers must not have shadows if they have borders).
+- **Forms & Inputs styling**:
+  - Form Inputs, Textareas, Select fields, and Datepicker triggers must use the layout background `#F6F9FF` (`bg-layout-bg`) instead of white or standard gray.
+  - Dropdown & Calendar width matching: The calendar popover/select dropdown width must match the trigger field width exactly (e.g. using `w-full` and limiting popover width to trigger width, and using Base UI's dynamic `--anchor-width` positioning properties).
+- **Custom Scrollbar design**:
+  - Target all scrollable containers using custom scrollbar styling in `globals.css` / `index.css`.
+  - Use primary color `#2F65C8` at 40% opacity in normal state, rising to 80% opacity on hover.
+- **Breadcrumbs typography & colors**:
+  - Do not use bold/extrabold weights on breadcrumb paths. Active segment must use primary color `#2F65C8`, and inactive segments/separators/home icon must use `text-muted-blue` (`#8188A2`).
+- **Notifications & Profile dropdowns**:
+  - Notifications popover mobile alignment: must use `fixed md:absolute left-4 right-4 md:left-auto md:right-0 mt-2 top-20 md:top-auto w-auto md:w-80` to prevent mobile clipping.
+  - User profile dropdown trigger button: must use Unsplash user portrait photo (`https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&h=100&q=80`) and hide all chevrons/text (a clean `w-10 h-10 rounded-xl` image button with hover ring).
+  - Profile dropdown list layout: must render a header with user avatar/name/email, links with colorful background icon containers (Dashboard, My Profile, Settings, Activity Log), and a separated footer logout button.
+  - Dropdown absolute positioning: must use `top-full mt-2` to align exactly below the trigger button and prevent clipping.
+- **Sidebar items and active trail**:
+  - Root category items must use `font-semibold` by default. Nested children links must use `font-medium`.
+  - Nested active trail: highlight parent and grandparent routes active with gradient background when a deep nested sub-route is active. Use dynamic indentation based on depth.
+

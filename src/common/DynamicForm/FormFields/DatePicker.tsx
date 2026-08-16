@@ -46,7 +46,7 @@ export const DatePicker = ({
         </Button>
       </PopoverTrigger>
       <PopoverContent 
-        className="p-0 bg-primary-background shadow-2xl border-border rounded-lg overflow-hidden" 
+        className="p-0 bg-layout-bg shadow-2xl border-border rounded-lg overflow-hidden" 
         align="start"
         style={{ width: 'var(--radix-popover-trigger-width)' }}
       >
@@ -113,7 +113,7 @@ export const DateTimePicker = ({
         </Button>
       </PopoverTrigger>
       <PopoverContent 
-        className="p-0 bg-primary-background shadow-2xl border-border rounded-lg overflow-hidden" 
+        className="p-0 bg-layout-bg shadow-2xl border-border rounded-lg overflow-hidden" 
         align="start"
         style={{ width: 'var(--radix-popover-trigger-width)' }}
       >

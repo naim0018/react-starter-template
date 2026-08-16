@@ -59,7 +59,7 @@ export const SelectField = ({
         </Button>
       </PopoverTrigger>
       <PopoverContent 
-        className="p-0 shadow-xl border-border bg-primary-background rounded-lg overflow-hidden" 
+        className="p-0 shadow-xl border-border bg-layout-bg rounded-lg overflow-hidden" 
         align="start"
         style={{ width: 'var(--radix-popover-trigger-width)' }}
       >

@@ -36,6 +36,11 @@
 
   --popover: 0 0% 100%;
   --popover-foreground: 222.2 84% 4.9%;
+
+  /* Brand Styling Custom Tokens */
+  --brand-gradient: linear-gradient(135deg, #699EFF 0%, #2F65C8 100%);
+  --layout-bg: #F6F9FF;
+  --muted-blue: #8188A2;
 }
 
 .dark {
@@ -53,6 +58,10 @@
 
   --popover: 222.2 84% 4.9%;
   --popover-foreground: 210 40% 98%;
+
+  /* Brand Styling Custom Tokens in Dark Mode */
+  --layout-bg: #090d16;
+  --muted-blue: #64748b;
 }
 
 /* =======================
@@ -81,6 +90,11 @@
   /* Fonts */
   --font-montserrat: var(--font-main);
   --font-poppins: var(--font-secondary);
+
+  /* Custom Sidebar & Layout Styles */
+  --color-layout-bg: var(--layout-bg);
+  --color-muted-blue: var(--muted-blue);
+  --background-image-brand-gradient: var(--brand-gradient);
 }
 
 /* =======================
@@ -166,4 +180,106 @@
     background-color: var(--primary-red);
     box-shadow: 0 0 0 4px var(--light-red);
   }
+}
+
+/* Custom Utilities for Sidebar & Buttons */
+.bg-brand-gradient {
+  background-image: var(--brand-gradient);
+}
+.text-muted-blue {
+  color: var(--muted-blue);
+}
+.bg-layout-bg {
+  background-color: var(--layout-bg);
+}
+
+/* ========================================================
+   💅 Custom Premium Scrollbar Styles (All Scrollable Areas)
+   ======================================================== */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(47, 101, 200, 0.4) transparent;
+}
+
+/* Webkit browser engines (Chrome, Safari, Edge, etc.) */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(47, 101, 200, 0.4); /* Primary theme blue #2F65C8 at 40% opacity */
+  border-radius: 9999px;
+  transition: background 0.2s ease-in-out;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(47, 101, 200, 0.8); /* Primary theme blue #2F65C8 at 80% opacity */
+}
+
+/* ========================================================
+   📝 Dynamic Form Inputs & Selects & Calendar Backgrounds
+   ======================================================== */
+/* Change background of all text inputs, textareas, selects, and pickers inside forms to layout-bg */
+form input:not([type="checkbox"]):not([type="radio"]),
+form textarea,
+form select,
+form button.bg-light-background,
+form .bg-light-background {
+  background-color: var(--layout-bg) !important;
+}
+
+/* Ensure focus states are clean and don't revert to white bg */
+form input:not([type="checkbox"]):not([type="radio"]):focus,
+form textarea:focus,
+form select:focus {
+  background-color: var(--primary-background) !important; /* matches focus:bg-primary-background */
+}
+
+/* Calendar Popover and Calendar component styling */
+.custom-calendar-wrapper,
+.react-calendar {
+  background-color: var(--layout-bg) !important;
+}
+
+/* Calendar Width Constraint to match trigger field exactly */
+.react-calendar {
+  width: 100% !important;
+  max-width: 100% !important;
+  border: none !important;
+  font-family: inherit !important;
+}
+
+.custom-calendar-wrapper {
+  background-color: var(--layout-bg) !important;
+  width: 100% !important;
+}
+
+/* Standardize react-calendar inner components */
+.react-calendar__navigation {
+  background-color: var(--layout-bg) !important;
+}
+
+.react-calendar__viewContainer {
+  background-color: var(--layout-bg) !important;
+}
+
+.react-calendar__tile {
+  background-color: var(--layout-bg) !important;
+}
+
+.react-calendar__tile:hover {
+  background-color: rgba(47, 101, 200, 0.1) !important;
+  border-radius: 6px;
+}
+
+.react-calendar__tile--active,
+.react-calendar__tile--hasActive {
+  background: var(--brand-gradient) !important;
+  color: white !important;
+  border-radius: 6px;
 }

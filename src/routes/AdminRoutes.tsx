@@ -55,7 +55,7 @@ export const adminRoutes = [
         children: [
           {
             icon: <ChartPie />,
-            name: "Index",
+            name: "Overview",
             index:true,
             element: <Overview />,
           },

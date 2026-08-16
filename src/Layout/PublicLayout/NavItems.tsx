@@ -50,21 +50,21 @@ const NavItems = ({
               {item.path ? (
                 <Link
                   to={item.path}
-                  className={`px-5 py-2 text-white inline-block no-underline ${
-                    parentActive ? "border-b-2" : ""
+                  className={`px-5 py-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white inline-block no-underline ${
+                    parentActive ? "border-b-2 border-blue-500 dark:border-blue-400 font-semibold text-blue-500 dark:text-blue-400" : ""
                   } ${classNameNC}`}
                 >
                   {item.label}
                 </Link>
               ) : (
-                <span className="px-5 py-2 text-white inline-block cursor-default">
+                <span className="px-5 py-2 text-slate-600 dark:text-slate-400 inline-block cursor-default">
                   {item.label}
                 </span>
               )}
 
               {/* Dropdown */}
               {item.children && item.children.length > 0 && (
-                <ul className="absolute left-0 top-full hidden min-w-[200px] rounded-lg bg-primary-brand shadow-lg group-hover:block">
+                <ul className="absolute left-0 top-full hidden min-w-[200px] rounded-lg bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-lg group-hover:block py-1 z-50">
                   {item.children.map((child) => {
                     const childActive =
                       child.path &&
@@ -75,9 +75,9 @@ const NavItems = ({
                       <li key={child.path}>
                         <Link
                           to={child.path || "#"}
-                          className={`block px-5 py-2 text-center text-white no-underline rounded-b-lg ${
+                          className={`block px-5 py-2 text-center text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white no-underline rounded-b-lg ${
                             childActive
-                              ? "bg-secondary-brand border-b-2 font-semibold"
+                              ? "bg-slate-50 dark:bg-slate-800 font-semibold text-blue-500 dark:text-blue-400"
                               : ""
                           } ${classNameC}`}
                         >

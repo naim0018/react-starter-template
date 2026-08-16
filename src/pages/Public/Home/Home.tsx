@@ -1,11 +1,10 @@
-import CommonWrapper from "@/common/CommonWrapper";
 import WorkInProgress from "@/common/WorkInProgress";
+import CommonWrapper from "@/common/CommonWrapper";
+
 const Home = () => {
   return (
     <CommonWrapper>
-      <div className="min-h-[90vh] flex items-center justify-center">
-        <WorkInProgress title="Welcome to React Typescript Starter Template" />
-      </div>
+      <WorkInProgress title="Welcome to React Typescript Starter Template" />
     </CommonWrapper>
   );
 };

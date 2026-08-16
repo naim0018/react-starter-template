@@ -20,8 +20,8 @@ const Breadcrumbs = ({ config, basePath }: BreadcrumbProps) => {
   );
 
   return (
-    <nav className="flex items-center space-x-2 text-sm text-gray-500 mb-6 px-1">
-      <Link to={basePath} className="hover:text-gray-900 transition-colors">
+    <nav className="flex items-center space-x-2 text-sm text-muted-blue mb-6 px-1">
+      <Link to={basePath} className="text-muted-blue hover:text-slate-800 transition-colors">
         <Home className="size-4" />
       </Link>
 
@@ -44,26 +44,22 @@ const Breadcrumbs = ({ config, basePath }: BreadcrumbProps) => {
           return cloneElement(
             routeData.icon as ReactElement,
             {
-              className: "size-3.5 flex-shrink-0 text-gray-400",
+              className: "size-3.5 flex-shrink-0 text-muted-blue",
             } as React.HTMLAttributes<HTMLElement>
           );
         };
 
         return (
           <div key={to} className="flex items-center space-x-2">
-            <ChevronRight className="size-4 text-gray-300 shrink-0" />
-            <div
-              className={`flex items-center gap-1.5 ${
-                last ? "text-gray-900 font-semibold" : ""
-              }`}
-            >
+            <ChevronRight className="size-4 text-muted-blue shrink-0" />
+            <div className="flex items-center gap-1.5">
               {renderIcon()}
               {last ? (
-                <span>{displayName}</span>
+                <span className="text-[#2F65C8] font-normal">{displayName}</span>
               ) : (
                 <Link
                   to={to}
-                  className="hover:text-gray-900 transition-colors no-underline"
+                  className="text-muted-blue hover:text-slate-800 transition-colors no-underline font-normal"
                 >
                   {displayName}
                 </Link>

@@ -1,12 +1,10 @@
-import CommonWrapper from "@/common/CommonWrapper";
 import WorkInProgress from "@/common/WorkInProgress";
+import CommonWrapper from "@/common/CommonWrapper";
 
 const Services = () => {
   return (
     <CommonWrapper>
-      <div className="min-h-[90vh] flex items-center justify-center">
-        <WorkInProgress title="Services Page" />
-      </div>
+      <WorkInProgress title="Services Page" />
     </CommonWrapper>
   );
 };

@@ -1,29 +1,76 @@
-import { Outlet } from "react-router-dom";
+import { useState } from "react";
+import { Outlet, useLocation } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import Breadcrumbs from "./Breadcrumbs";
 import { adminRoutes } from "@/routes/AdminRoutes";
+import { menuGenerator } from "@/utils/Generator/MenuGenerator";
+
+const routeDescriptions: Record<string, string> = {
+  "Overview": "Welcome back to your reseller dashboard.",
+  "Dynamic Table": "Manage database records using a powerful dynamic table.",
+  "Dynamic Form": "Build and submit validation-ready dynamic forms.",
+  "Employees": "Manage staff records, roles, and profiles.",
+  "Marketing": "Monitor campaigns, traffic growth, and outreach stats.",
+  "System Settings": "Configure system settings, integrations, and preferences.",
+  "Help & Support": "Access documentation and raise customer support tickets.",
+};
 
 const DashboardLayout = () => {
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const location = useLocation();
+
+  // Dynamically resolve active route name
+  const menu = menuGenerator(adminRoutes, "/admin");
+
+  const findActiveItem = (items: any[]): any => {
+    for (const item of items) {
+      if (item.path === location.pathname) return item;
+      if (item.children) {
+        const found = findActiveItem(item.children);
+        if (found) return found;
+      }
+    }
+    // Fallback: match prefix if not exact match (excluding base paths)
+    for (const item of items) {
+      if (item.path && item.path !== "/admin" && location.pathname.startsWith(item.path)) {
+        return item;
+      }
+    }
+    return null;
+  };
+
+  const activeItem = findActiveItem(menu);
+  const title = activeItem ? activeItem.label : "Overview";
+  const description = activeItem && routeDescriptions[activeItem.label]
+    ? routeDescriptions[activeItem.label]
+    : "Welcome back to your reseller dashboard.";
+
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex h-screen overflow-hidden bg-layout-bg">
       {/* 1. Fixed Sidebar */}
-      <Sidebar />
+      <Sidebar isMobileOpen={isMobileOpen} setIsMobileOpen={setIsMobileOpen} />
+
+      {/* Backdrop overlay for mobile */}
+      {isMobileOpen && (
+        <div
+          className="fixed inset-0 bg-slate-900/30 backdrop-blur-xs z-40 md:hidden transition-opacity duration-200"
+          onClick={() => setIsMobileOpen(false)}
+        />
+      )}
 
       {/* 2. Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0">
-        <Header />
+      <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+        <Header 
+          title={title} 
+          description={description} 
+          onMenuClick={() => setIsMobileOpen(true)}
+        />
 
-        <main className="p-6 overflow-y-auto">
+        <main className="p-6 flex-1 overflow-y-auto">
           {/* Breadcrumbs (Optional) */}
-          <div className="mb-6">
-            <div className="flex items-center gap-2 space-y-2">
-              <Breadcrumbs config={adminRoutes} basePath="/admin" />
-            </div>
-            <h1 className="text-2xl font-bold text-gray-800">Overview</h1>
-            <p className="text-sm text-gray-500">
-              Welcome back to your reseller dashboard.
-            </p>
+          <div className="mb-4">
+            <Breadcrumbs config={adminRoutes} basePath="/admin" />
           </div>
           <Outlet />
         </main>

@@ -53,7 +53,7 @@ export const DateRangePicker = ({
       </Button>
 
       {open && (
-        <div className="absolute top-12 left-0 z-50 bg-primary-background rounded-lg shadow-2xl border border-border p-5 w-full min-w-[320px] animate-in fade-in zoom-in duration-200">
+        <div className="absolute top-12 left-0 z-50 bg-layout-bg rounded-lg shadow-2xl border border-border p-5 w-full min-w-[320px] animate-in fade-in zoom-in duration-200">
           <div className="flex justify-between items-center mb-4 pb-3 border-b border-border">
             <div>
               <h4 className="text-sm font-bold text-primary-text">

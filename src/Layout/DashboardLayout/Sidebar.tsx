@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, LogOut } from "lucide-react";
 import { adminRoutes } from "@/routes/AdminRoutes";
 import { menuGenerator, MenuItem } from "@/utils/Generator/MenuGenerator";
 import { Location } from "react-router-dom";
@@ -8,30 +8,20 @@ import { cn } from "@/lib/utils";
 
 const exactMatchPaths = ["/admin", "/user"];
 
-// Clean, tech-styled logo that matches the site's dark slate & blue theme
+// Clean, tech-styled logo that matches the site's light & blue theme
 const BaseKitLogo = ({ collapsed }: { collapsed: boolean }) => {
-  if (collapsed) {
-    return (
-      <div className="flex flex-col items-center justify-center w-full py-1">
-        <svg viewBox="0 0 24 24" className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" strokeWidth="2.5">
-          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </div>
-    );
-  }
-
   return (
-    <div className="flex items-center gap-3 py-1 select-none">
-      <svg viewBox="0 0 24 24" className="w-7 h-7 text-blue-500" fill="none" stroke="currentColor" strokeWidth="2.5">
+    <div className="flex items-center gap-3 py-1 select-none w-full justify-center md:justify-start">
+      <svg viewBox="0 0 24 24" className="w-7 h-7 text-blue-500 shrink-0" fill="none" stroke="currentColor" strokeWidth="2.5">
         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
-      <div className="flex flex-col">
-        <div className="text-lg tracking-tight leading-none text-white font-medium flex items-baseline">
+      <div className={cn("flex flex-col transition-all duration-200", collapsed ? "md:hidden" : "block")}>
+        <div className="text-lg tracking-tight leading-none text-primary-text font-medium flex items-baseline">
           <span>Base</span>
           <span className="font-semibold text-blue-500">Kit</span>
-          <span className="text-[7px] font-normal align-super ml-0.5 opacity-80">TM</span>
+          <span className="text-xs font-normal align-super ml-0.5 opacity-80">TM</span>
         </div>
-        <span className="text-[7px] font-semibold tracking-wider text-slate-400 uppercase mt-0.5">
+        <span className="text-xs font-semibold tracking-wider text-muted-blue uppercase mt-0.5">
           Admin Template
         </span>
       </div>
@@ -46,7 +36,7 @@ const isRouteActive = (item: MenuItem, currentPath: string): boolean => {
 
   if (exactMatchPaths.includes(item.path)) return false;
 
-  if (currentPath.startsWith(item.path + "/")) return true;
+  if (item.path !== "/" && currentPath.startsWith(item.path + "/")) return true;
 
   if (item.children) {
     return item.children.some((child) => isRouteActive(child, currentPath));
@@ -55,8 +45,15 @@ const isRouteActive = (item: MenuItem, currentPath: string): boolean => {
   return false;
 };
 
-const SidebarItem = ({ item, location }: { item: MenuItem; location: Location }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const hasActiveChild = (menuItem: MenuItem, path: string): boolean => {
+  if (!menuItem.children) return false;
+  return menuItem.children.some(
+    (child) => isRouteActive(child, path) || hasActiveChild(child, path)
+  );
+};
+
+const SidebarItem = ({ item, location, depth = 0 }: { item: MenuItem; location: Location; depth?: number }) => {
+  const [isOpen, setIsOpen] = useState(() => hasActiveChild(item, location.pathname));
   const hasChildren = !!item.children?.length;
   const isActive = isRouteActive(item, location.pathname);
 
@@ -67,24 +64,39 @@ const SidebarItem = ({ item, location }: { item: MenuItem; location: Location })
           <button
             onClick={() => setIsOpen(!isOpen)}
             className={cn(
-              "flex items-center justify-between w-full h-10 px-4 text-base font-semibold rounded-xl transition-all duration-200 group text-white/70 hover:bg-white/10 hover:text-white"
+              "flex items-center justify-between w-full rounded-xl transition-all duration-200 group cursor-pointer",
+              depth === 0 ? "h-12 px-4 text-base font-semibold" : "h-10 px-3 text-[15px] font-medium",
+              isActive 
+                ? "bg-brand-gradient text-white font-semibold" 
+                : "text-muted-blue hover:bg-light-background hover:text-primary-text"
             )}
           >
             <div className="flex items-center gap-3">
-              {item.icon && <span className="shrink-0">{item.icon}</span>}
-              <span>{item.label}</span>
+              {item.icon && (
+                <span className={cn("shrink-0 transition-colors", 
+                  depth === 0 ? "[&_svg]:size-6" : "[&_svg]:size-4",
+                  isActive ? "text-white" : "text-muted-blue group-hover:text-primary-text"
+                )}>
+                  {item.icon}
+                </span>
+              )}
+              <span className="truncate">{item.label}</span>
             </div>
-            <ChevronDown
+            <ChevronRight
               className={cn(
-                "w-3.5 h-3.5 transition-transform duration-200 opacity-60 group-hover:opacity-100",
-                isOpen && "rotate-180"
+                "w-3.5 h-3.5 transition-transform duration-200 shrink-0",
+                isActive ? "text-white" : "text-muted-blue group-hover:text-primary-text",
+                isOpen && "rotate-90"
               )}
             />
           </button>
           {isOpen && (
-            <div className="mt-1 pl-4 space-y-2 border-l border-white/10 ml-6 animate-in slide-in-from-top-1 duration-200">
+            <div className={cn(
+              "mt-1 space-y-1 border-l border-border animate-in slide-in-from-top-1 duration-200",
+              depth === 0 ? "ml-6 pl-3" : "ml-3 pl-2 border-l-border/60"
+            )}>
               {item.children!.map((child) => (
-                <SidebarItem key={child.path} item={child} location={location} />
+                <SidebarItem key={child.path} item={child} location={location} depth={depth + 1} />
               ))}
             </div>
           )}
@@ -93,31 +105,55 @@ const SidebarItem = ({ item, location }: { item: MenuItem; location: Location })
         <NavLink
           to={item.path || "#"}
           className={cn(
-            "flex items-center gap-3 px-4 h-10 text-base font-semibold rounded-xl transition-all duration-200 no-underline!",
+            "flex items-center gap-3 rounded-xl transition-all duration-200 no-underline! group",
+            depth === 0 ? "h-12 px-4 text-base font-semibold" : "h-10 px-3 text-[15px] font-medium",
             isActive
-              ? "bg-white text-slate-900 shadow-sm"
-              : "text-white/70 hover:bg-white/10 hover:text-white"
+              ? "bg-brand-gradient text-white font-semibold"
+              : "text-muted-blue hover:bg-light-background hover:text-primary-text"
           )}
         >
           {item.icon && (
-            <span className={cn("shrink-0", isActive ? "text-slate-900" : "text-white/70")}>
+            <span className={cn("shrink-0 transition-colors", 
+              depth === 0 ? "[&_svg]:size-6" : "[&_svg]:size-4",
+              isActive ? "text-white" : "text-muted-blue group-hover:text-primary-text"
+            )}>
               {item.icon}
             </span>
           )}
-          <span>{item.label}</span>
+          <span className="truncate">{item.label}</span>
         </NavLink>
       )}
     </div>
   );
 };
 
-const Sidebar = () => {
+interface SidebarProps {
+  isMobileOpen: boolean;
+  setIsMobileOpen: (open: boolean) => void;
+}
+
+const Sidebar = ({ isMobileOpen, setIsMobileOpen }: SidebarProps) => {
   const menu = menuGenerator(adminRoutes, "/admin");
   const location = useLocation();
   const [isCollapsed, setIsCollapsed] = useState(() => {
     const saved = localStorage.getItem("sidebar-collapsed");
     return saved === "true";
   });
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Close mobile sidebar on route change
+  useEffect(() => {
+    setIsMobileOpen(false);
+  }, [location.pathname, setIsMobileOpen]);
 
   const toggleCollapse = () => {
     const nextState = !isCollapsed;
@@ -132,59 +168,66 @@ const Sidebar = () => {
     return acc;
   }, {});
 
+  const showCollapsed = isCollapsed && !isMobile;
+
   return (
     <aside
       className={cn(
-        "bg-slate-900 text-white min-h-screen sticky top-0 flex flex-col transition-all duration-300 z-40 border-r border-slate-800 shrink-0 relative",
-        isCollapsed ? "w-20" : "w-64"
+        "bg-primary-background text-primary-text h-screen flex flex-col transition-all duration-300 z-50 border-r border-border shrink-0",
+        // Desktop layouts
+        "md:sticky md:top-0 md:translate-x-0",
+        showCollapsed ? "md:w-20" : "md:w-[280px]",
+        // Mobile layouts (drawer overlay style)
+        "fixed left-0 top-0 w-[280px] md:static",
+        isMobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
       )}
     >
       {/* Floating Collapse/Expand Button aligned exactly on the border intersection */}
       <button
         onClick={toggleCollapse}
-        className="absolute right-[-12px] top-16 z-50 transform -translate-y-1/2 w-6 h-6 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center cursor-pointer shadow-md hover:border-slate-500 transition-colors text-slate-400 hover:text-white focus:outline-none"
+        className="absolute right-[-12px] top-20 z-50 transform -translate-y-1/2 w-6 h-6 rounded-full bg-primary-background border border-border hidden md:flex items-center justify-center cursor-pointer hover:border-border transition-colors text-secondary-text hover:text-primary-text focus:outline-none"
       >
-        {isCollapsed ? (
+        {showCollapsed ? (
           <ChevronRight className="w-3.5 h-3.5" />
         ) : (
           <ChevronLeft className="w-3.5 h-3.5" />
         )}
       </button>
 
-      {/* Sidebar Header with Site-styled BaseKit Logo - h-16 to align with Top Header */}
-      <div className="h-16 flex items-center justify-center border-b border-slate-800 px-4">
-        <BaseKitLogo collapsed={isCollapsed} />
+      {/* Sidebar Header with Site-styled BaseKit Logo - h-20 to align with Top Header */}
+      <div className="h-20 flex items-center justify-center border-b border-border px-4 shrink-0">
+        <BaseKitLogo collapsed={showCollapsed} />
       </div>
 
       {/* Navigation Groups */}
-      <nav className="flex-1 overflow-y-auto px-4 py-6 space-y-7 scrollbar-thin scrollbar-thumb-slate-800">
+      <nav className="flex-1 overflow-y-auto px-4 py-6 space-y-7 scrollbar-thin scrollbar-thumb-slate-200">
         {Object.entries(groupedMenu).map(([group, items]) => (
           <div key={group} className="space-y-2">
-            {!isCollapsed && (
-              <span className="text-xs uppercase tracking-wider font-semibold text-slate-500 px-4 block">
+            {!showCollapsed && (
+              <span className="text-xs uppercase tracking-wider font-semibold text-muted-blue px-4 block">
                 {group}
               </span>
             )}
             <div className="space-y-2">
               {items.map((item) =>
-                isCollapsed ? (
+                showCollapsed ? (
                   <Link
                     key={item.path}
                     to={item.path || "#"}
                     className={cn(
-                      "flex items-center justify-center h-10 rounded-xl transition-all duration-200 hover:bg-slate-800",
+                      "flex items-center justify-center h-12 rounded-xl transition-all duration-200",
                       isRouteActive(item, location.pathname)
-                        ? "bg-white text-slate-900 shadow-sm"
-                        : "text-white/70 hover:text-white"
+                        ? "bg-brand-gradient text-white"
+                        : "text-muted-blue hover:bg-light-background hover:text-primary-text"
                     )}
                   >
                     {item.icon && (
                       <span
                         className={cn(
-                          "shrink-0 [&_svg]:size-5",
+                          "shrink-0 [&_svg]:size-6",
                           isRouteActive(item, location.pathname)
-                            ? "text-slate-900"
-                            : "text-white/70"
+                            ? "text-white"
+                            : "text-muted-blue hover:text-primary-text"
                         )}
                       >
                         {item.icon}
@@ -199,6 +242,39 @@ const Sidebar = () => {
           </div>
         ))}
       </nav>
+
+      {/* User Profile Card at Bottom */}
+      <div className="p-4 border-t border-border mt-auto shrink-0">
+        {showCollapsed ? (
+          <div className="flex flex-col items-center gap-4">
+            <img
+              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&h=100&q=80"
+              alt="User Avatar"
+              className="w-12 h-12 rounded-xl border border-border object-cover"
+            />
+            <button className="text-muted-blue hover:text-red-500 transition-colors cursor-pointer">
+              <LogOut className="w-5 h-5" />
+            </button>
+          </div>
+        ) : (
+          <div className="flex items-center justify-between p-3 border border-border rounded-xl bg-primary-background">
+            <div className="flex items-center gap-3">
+              <img
+                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&h=100&q=80"
+                alt="User Avatar"
+                className="w-12 h-12 rounded-xl border border-border object-cover"
+              />
+              <div className="flex flex-col">
+                <span className="text-sm font-semibold text-primary-text leading-tight">Alex</span>
+                <span className="text-xs text-muted-blue leading-tight mt-0.5">Manager Admin</span>
+              </div>
+            </div>
+            <button className="text-muted-blue hover:text-red-500 transition-colors cursor-pointer">
+              <LogOut className="w-4 h-4" />
+            </button>
+          </div>
+        )}
+      </div>
     </aside>
   );
 };
