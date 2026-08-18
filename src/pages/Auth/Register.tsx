@@ -6,6 +6,8 @@ import { motion } from "framer-motion";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useTheme } from "@/hooks/useTheme.tsx";
+import { ThemeToggle } from "@/common/ThemeToggle";
+import Logo from "@/common/Logo";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -21,7 +23,7 @@ export default function RegisterPage() {
 
   React.useEffect(() => {
     setTheme("light");
-  }, [setTheme]);
+  }, []);
 
   const handleRegisterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,7 +36,17 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col gap-10 items-center justify-center bg-white dark:bg-slate-950 p-4 select-none">
+    <div className="min-h-screen w-full flex flex-col gap-10 items-center justify-center bg-white dark:bg-slate-950 p-4 select-none relative">
+      {/* Top Navigation Controls */}
+      <div className="absolute top-3 left-0 right-0 w-full">
+        <div className="max-w-[1400px] mx-auto px-6 flex items-center justify-between">
+          <div onClick={() => navigate("/")} className="cursor-pointer w-52 transition-transform hover:scale-105 active:scale-95">
+            <Logo />
+          </div>
+          <ThemeToggle />
+        </div>
+      </div>
+
       {/* Title Centered Above the Card */}
       <h1 className="text-3xl font-medium text-[#2b353d] dark:text-slate-100 tracking-wide text-center w-full">
         Register

@@ -49,7 +49,9 @@ const SidebarItem = ({ item, location, depth = 0 }: { item: MenuItem; location: 
               "flex items-center justify-between w-full rounded-xl transition-all duration-200 group cursor-pointer",
               depth === 0 ? "h-12 px-4 text-base font-semibold" : "h-10 px-3 text-[15px] font-medium",
               isActive 
-                ? "bg-brand-gradient text-white font-semibold" 
+                ? depth === 0
+                  ? "bg-brand-gradient text-white font-semibold"
+                  : "text-secondary-brand font-semibold"
                 : "text-muted-blue hover:bg-light-background hover:text-primary-text"
             )}
           >
@@ -57,7 +59,9 @@ const SidebarItem = ({ item, location, depth = 0 }: { item: MenuItem; location: 
               {item.icon && (
                 <span className={cn("shrink-0 transition-colors", 
                   depth === 0 ? "[&_svg]:size-6" : "[&_svg]:size-4",
-                  isActive ? "text-white" : "text-muted-blue group-hover:text-primary-text"
+                  isActive
+                    ? depth === 0 ? "text-white" : "text-secondary-brand"
+                    : "text-muted-blue group-hover:text-primary-text"
                 )}>
                   {item.icon}
                 </span>
@@ -67,7 +71,9 @@ const SidebarItem = ({ item, location, depth = 0 }: { item: MenuItem; location: 
             <ChevronRight
               className={cn(
                 "w-3.5 h-3.5 transition-transform duration-200 shrink-0",
-                isActive ? "text-white" : "text-muted-blue group-hover:text-primary-text",
+                isActive
+                  ? depth === 0 ? "text-white" : "text-secondary-brand"
+                  : "text-muted-blue group-hover:text-primary-text",
                 isOpen && "rotate-90"
               )}
             />
@@ -90,14 +96,18 @@ const SidebarItem = ({ item, location, depth = 0 }: { item: MenuItem; location: 
             "flex items-center gap-3 rounded-xl transition-all duration-200 no-underline! group",
             depth === 0 ? "h-12 px-4 text-base font-semibold" : "h-10 px-3 text-[15px] font-medium",
             isActive
-              ? "bg-brand-gradient text-white font-semibold"
+              ? depth === 0
+                ? "bg-brand-gradient text-white font-semibold"
+                : "text-secondary-brand font-semibold"
               : "text-muted-blue hover:bg-light-background hover:text-primary-text"
           )}
         >
           {item.icon && (
             <span className={cn("shrink-0 transition-colors", 
               depth === 0 ? "[&_svg]:size-6" : "[&_svg]:size-4",
-              isActive ? "text-white" : "text-muted-blue group-hover:text-primary-text"
+              isActive
+                ? depth === 0 ? "text-white" : "text-secondary-brand"
+                : "text-muted-blue group-hover:text-primary-text"
             )}>
               {item.icon}
             </span>

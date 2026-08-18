@@ -16,7 +16,7 @@ import Loadable from "@/utils/Loadable";
 import { AdminSkeleton } from "@/common/Skeleton/Admin/AdminSkeleton";
 
 const AdminDashboard = Loadable(
-  lazy(() => import("@/pages/Admin/Dashboard/AdminDashboard")),
+  lazy(() => import("@/pages/Admin/Dashboard/Overview/Overview")),
   AdminSkeleton
 );
 const Settings = Loadable(
