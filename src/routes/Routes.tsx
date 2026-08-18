@@ -18,7 +18,8 @@ import { publicRoutes } from "./PublicRoutes";
 // CORE COMPONENTS (Always included)
 const App = lazy(() => import("../App"));
 const Login = lazy(() => import("@/pages/Auth/Login"));
-const Signup = lazy(() => import("@/pages/Auth/Signup"));
+const Register = lazy(() => import("@/pages/Auth/Register"));
+const ForgotPassword = lazy(() => import("@/pages/Auth/ForgotPassword"));
 const Form = lazy(() => import("@/pages/Form"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
@@ -38,15 +39,31 @@ const routes = createBrowserRouter([
         path: "/form",
         element: <Form />,
       },
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/signup",
-        element: <Signup />,
-      },
     ],
+  },
+  {
+    path: "/login",
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <Login />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/register",
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <Register />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/forgot-password",
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <ForgotPassword />
+      </Suspense>
+    ),
   },
 
   // [ADMIN_ROUTES_START]

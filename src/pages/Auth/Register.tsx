@@ -7,11 +7,15 @@ import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useTheme } from "@/hooks/useTheme.tsx";
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const navigate = useNavigate();
+  const [fullName, setFullName] = useState("john Dheere");
+  const [businessName, setBusinessName] = useState("john Dheere");
   const [email, setEmail] = useState("johndheere@gmail.com");
   const [password, setPassword] = useState("password123");
+  const [confirmPassword, setConfirmPassword] = useState("password123");
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { setTheme } = useTheme();
 
@@ -19,21 +23,21 @@ export default function LoginPage() {
     setTheme("light");
   }, [setTheme]);
 
-  const handleLoginSubmit = (e: React.FormEvent) => {
+  const handleRegisterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setTimeout(() => {
       setIsSubmitting(false);
-      toast.success("Welcome back! Login successful.");
+      toast.success("Account created successfully!");
       navigate("/");
     }, 1500);
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col gap-10 items-center justify-center bg-white dark:bg-slate-950 p-4 select-none relative">
+    <div className="min-h-screen w-full flex flex-col gap-10 items-center justify-center bg-white dark:bg-slate-950 p-4 select-none">
       {/* Title Centered Above the Card */}
       <h1 className="text-3xl font-medium text-[#2b353d] dark:text-slate-100 tracking-wide text-center w-full">
-        Login
+        Register
       </h1>
 
       {/* Card Wrapper */}
@@ -43,8 +47,36 @@ export default function LoginPage() {
         transition={{ duration: 0.5 }}
         className="w-full max-w-[488px] bg-[#f6f9ff] dark:bg-slate-900 rounded-xl p-8 shadow-[0_4px_10px_rgba(0,0,0,0.08)] border border-slate-100/50 dark:border-slate-800/50 flex flex-col gap-3"
       >
-        <form onSubmit={handleLoginSubmit} className="flex flex-col gap-3">
-          {/* Email Input */}
+        <form onSubmit={handleRegisterSubmit} className="flex flex-col gap-3">
+          {/* Full Name */}
+          <div className="flex flex-col gap-2 px-4 w-full">
+            <label className="text-sm font-medium text-[#2b353d] dark:text-slate-300">
+              Full Name
+            </label>
+            <input
+              type="text"
+              required
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              className="w-full bg-transparent! focus:bg-transparent! border-b border-border/80 px-3 py-2.5 text-sm text-primary-text focus:border-[#337bff] focus:outline-none transition-colors cursor-pointer"
+            />
+          </div>
+
+          {/* Business Name */}
+          <div className="flex flex-col gap-2 px-4 w-full">
+            <label className="text-sm font-medium text-[#2b353d] dark:text-slate-300">
+              Business Name
+            </label>
+            <input
+              type="text"
+              required
+              value={businessName}
+              onChange={(e) => setBusinessName(e.target.value)}
+              className="w-full bg-transparent! focus:bg-transparent! border-b border-border/80 px-3 py-2.5 text-sm text-primary-text focus:border-[#337bff] focus:outline-none transition-colors cursor-pointer"
+            />
+          </div>
+
+          {/* Email */}
           <div className="flex flex-col gap-2 px-4 w-full">
             <label className="text-sm font-medium text-[#2b353d] dark:text-slate-300">
               Email
@@ -58,10 +90,10 @@ export default function LoginPage() {
             />
           </div>
 
-          {/* Password Input */}
+          {/* Create Password */}
           <div className="flex flex-col gap-2 px-4 w-full relative">
             <label className="text-sm font-medium text-[#2b353d] dark:text-slate-300">
-              password
+              create password
             </label>
             <input
               type={showPassword ? "text" : "password"}
@@ -79,15 +111,29 @@ export default function LoginPage() {
             </button>
           </div>
 
-          {/* Actions Group (Forgot password and Submit button) */}
-          <div className="flex flex-col gap-10 px-4 w-full mt-4">
-            <span
-              onClick={() => navigate("/forgot-password")}
-              className="text-[#1c73e0] text-sm font-medium hover:underline cursor-pointer self-start"
+          {/* Confirm Password */}
+          <div className="flex flex-col gap-2 px-4 w-full relative">
+            <label className="text-sm font-medium text-[#2b353d] dark:text-slate-300">
+              Confirm password
+            </label>
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              required
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="w-full bg-transparent! focus:bg-transparent! border-b border-border/80 px-3 py-2.5 pr-10 text-sm text-primary-text focus:border-[#337bff] focus:outline-none transition-colors cursor-pointer"
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute right-6 bottom-3 text-secondary-text hover:text-[#337bff] transition-colors"
             >
-              Forgot password
-            </span>
+              {showConfirmPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
+            </button>
+          </div>
 
+          {/* Submit Action Container */}
+          <div className="flex flex-col gap-6 px-4 w-full mt-4">
             <button
               type="submit"
               disabled={isSubmitting}
@@ -96,23 +142,23 @@ export default function LoginPage() {
               {isSubmitting ? (
                 <>
                   <Loader2 className="size-5 animate-spin" />
-                  Logging in...
+                  Registering...
                 </>
               ) : (
-                "Log in"
+                "Register"
               )}
             </button>
           </div>
         </form>
 
-        {/* Bottom Registration Link */}
-        <p className="text-center text-sm text-secondary-text mt-4">
-          Don’t have account ?{" "}
+        {/* Redirect Link */}
+        <p className="text-center text-sm text-[#2b353d] dark:text-slate-300 mt-4">
+          If have an account ?{" "}
           <span
-            onClick={() => navigate("/register")}
+            onClick={() => navigate("/login")}
             className="text-[#1c73e0] font-semibold hover:underline cursor-pointer"
           >
-            Register Now
+            Sign in Now
           </span>
         </p>
       </motion.div>
