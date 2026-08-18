@@ -54,20 +54,20 @@ const DashboardLayout = () => {
       {/* Backdrop overlay for mobile */}
       {isMobileOpen && (
         <div
-          className="fixed inset-0 bg-slate-900/30 backdrop-blur-xs z-40 md:hidden transition-opacity duration-200"
+          className="fixed inset-0 bg-slate-900/30 backdrop-blur-xs z-40 sm:hidden transition-opacity duration-200"
           onClick={() => setIsMobileOpen(false)}
         />
       )}
 
       {/* 2. Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+      <div className="flex-1 flex flex-col min-w-0 h-screen overflow-y-auto">
         <Header 
           title={title} 
           description={description} 
           onMenuClick={() => setIsMobileOpen(true)}
         />
 
-        <main className="p-6 flex-1 overflow-y-auto">
+        <main className="flex-1 px-6 py-6">
           {/* Breadcrumbs (Optional) */}
           <div className="mb-4">
             <Breadcrumbs config={adminRoutes} basePath="/admin" />

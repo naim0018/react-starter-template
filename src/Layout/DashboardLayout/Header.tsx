@@ -73,6 +73,9 @@ const Header = ({ title, description, onMenuClick }: HeaderProps) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const searchRef = useRef<HTMLDivElement>(null);
+
   const [notifications, setNotifications] = useState<NotificationItem[]>(initialNotifications);
   const [isNotifOpen, setIsNotifOpen] = useState(false);
   const notifRef = useRef<HTMLDivElement>(null);
@@ -93,6 +96,12 @@ const Header = ({ title, description, onMenuClick }: HeaderProps) => {
       ) {
         setIsNotifOpen(false);
       }
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target as Node)
+      ) {
+        setIsSearchOpen(false);
+      }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
@@ -111,13 +120,13 @@ const Header = ({ title, description, onMenuClick }: HeaderProps) => {
   };
 
   return (
-    <header className="h-20 bg-primary-background sticky top-0 z-30 flex items-center mx-6 rounded-b-xl shadow-md">
+    <header className="relative h-20 bg-primary-background sticky top-0 z-30 flex items-center mx-6 rounded-b-xl shadow-md">
       <div className="flex items-center justify-between w-full px-6">
         {/* Left Side: Hamburger & Title & Description */}
-        <div className="flex items-center gap-3 md:gap-4 min-w-0">
+        <div className="flex items-center gap-3 sm:gap-4 min-w-0">
           <button
             onClick={onMenuClick}
-            className="p-2 -ml-2 rounded-lg hover:bg-light-background text-secondary-text hover:text-primary-text md:hidden cursor-pointer shrink-0"
+            className="p-2 -ml-2 rounded-lg hover:bg-light-background text-secondary-text hover:text-primary-text sm:hidden cursor-pointer shrink-0"
           >
             <Menu className="w-6 h-6" />
           </button>
@@ -135,21 +144,49 @@ const Header = ({ title, description, onMenuClick }: HeaderProps) => {
         </div>
 
         {/* Right Side: Actions & Profile */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4 shrink-0">
           {/* Search Input */}
-          <div className="relative w-60 hidden md:block">
-            <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-              <Search className="w-5 h-5 text-slate-400" />
-            </span>
-            <input
-              type="text"
-              placeholder="Search..."
-              className="w-full pl-9 pr-4 py-1.5 bg-light-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/5 focus:border-blue-500 transition-all text-primary-text placeholder:text-slate-400"
-            />
+          <div className="static sm:relative flex items-center" ref={searchRef}>
+            {/* Desktop Search */}
+            <div className="relative w-60 hidden lg:block transition-all duration-300">
+              <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                <Search className="w-5 h-5 text-slate-400" />
+              </span>
+              <input
+                type="text"
+                placeholder="Search..."
+                className="w-full pl-9 pr-4 py-1.5 bg-light-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/5 focus:border-blue-500 transition-all text-primary-text placeholder:text-slate-400"
+              />
+            </div>
+
+            {/* Mobile/Tablet Search Icon */}
+            <button
+              onClick={() => setIsSearchOpen(!isSearchOpen)}
+              className="p-2 text-slate-500 hover:text-primary-text hover:bg-light-background rounded-lg transition-colors cursor-pointer lg:hidden"
+            >
+              <Search className="w-5 h-5" />
+            </button>
+
+            {/* Mobile/Tablet Search Popover */}
+            {isSearchOpen && (
+              <div className="absolute left-0 right-0 sm:left-0 sm:right-auto top-full mt-2 w-auto sm:w-72 bg-primary-background border border-border rounded-lg p-2 z-50 shadow-lg animate-in fade-in zoom-in-95 duration-100 lg:hidden">
+                <div className="relative">
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                    <Search className="w-5 h-5 text-slate-400" />
+                  </span>
+                  <input
+                    type="text"
+                    placeholder="Search..."
+                    autoFocus
+                    className="w-full pl-9 pr-4 py-2 bg-light-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/5 focus:border-blue-500 transition-all text-primary-text placeholder:text-slate-400"
+                  />
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Notifications Dropdown Container */}
-          <div className="relative" ref={notifRef}>
+          <div className="static sm:relative" ref={notifRef}>
             <button
               onClick={() => setIsNotifOpen(!isNotifOpen)}
               className="p-2 text-slate-500 hover:text-primary-text hover:bg-light-background rounded-lg relative transition-colors cursor-pointer"
@@ -164,7 +201,7 @@ const Header = ({ title, description, onMenuClick }: HeaderProps) => {
 
             {/* Notification Dropdown Panel */}
             {isNotifOpen && (
-              <div className="fixed md:absolute left-4 right-4 md:left-auto md:right-0 mt-2 top-20 md:top-auto w-auto md:w-80 bg-primary-background border border-border rounded-lg py-2 z-50 shadow-lg animate-in fade-in zoom-in-95 duration-100">
+              <div className="absolute left-0 right-0 sm:left-auto sm:right-0 top-full mt-2 w-auto sm:w-80 bg-primary-background border border-border rounded-lg py-2 z-50 shadow-lg animate-in fade-in zoom-in-95 duration-100">
                 <div className="flex items-center justify-between px-4 py-2 border-b border-border mb-1">
                   <p className="text-xs text-primary-text font-bold uppercase tracking-wider">
                     Notifications
@@ -240,7 +277,7 @@ const Header = ({ title, description, onMenuClick }: HeaderProps) => {
           <div className="h-6 w-[1px] bg-border"></div>
 
           {/* User Profile */}
-          <div className="relative flex items-center" ref={dropdownRef}>
+          <div className="static sm:relative flex items-center" ref={dropdownRef}>
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               className="w-10 h-10 rounded-xl overflow-hidden border border-border transition-all focus:outline-none cursor-pointer flex items-center justify-center hover:ring-2 hover:ring-blue-500/20 bg-primary-background"
@@ -254,7 +291,7 @@ const Header = ({ title, description, onMenuClick }: HeaderProps) => {
 
             {/* Dropdown Menu - Light Theme Aesthetic matching Next.js */}
             {isDropdownOpen && (
-              <div className="absolute right-0 top-full mt-2 w-72 bg-primary-background rounded-lg border border-border overflow-hidden z-[100] animate-in fade-in zoom-in-95 duration-200">
+              <div className="absolute left-0 right-0 sm:left-auto sm:right-0 top-full mt-2 w-auto sm:w-72 bg-primary-background rounded-lg border border-border overflow-hidden z-[100] animate-in fade-in zoom-in-95 duration-200">
                 {/* Header */}
                 <div className="p-4 bg-light-background border-b border-border">
                   <div className="flex items-center gap-3">
