@@ -74,6 +74,7 @@ const Header = ({ title, description, onMenuClick }: HeaderProps) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchVal, setSearchVal] = useState("");
   const searchRef = useRef<HTMLDivElement>(null);
 
   const [notifications, setNotifications] = useState<NotificationItem[]>(initialNotifications);
@@ -144,18 +145,20 @@ const Header = ({ title, description, onMenuClick }: HeaderProps) => {
         </div>
 
         {/* Right Side: Actions & Profile */}
-        <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+        <div className="flex items-center gap-2 sm:gap-4 shrink-0 h-full">
           {/* Search Input */}
-          <div className="static sm:relative flex items-center" ref={searchRef}>
+          <div className="static sm:relative flex items-center h-full" ref={searchRef}>
             {/* Desktop Search */}
             <div className="relative w-60 hidden lg:block transition-all duration-300">
               <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                <Search className="w-5 h-5 text-slate-400" />
+                <Search className="size-5 text-slate-400" />
               </span>
               <input
                 type="text"
+                value={searchVal}
+                onChange={(e) => setSearchVal(e.target.value)}
                 placeholder="Search..."
-                className="w-full pl-9 pr-4 py-1.5 bg-light-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/5 focus:border-blue-500 transition-all text-primary-text placeholder:text-slate-400"
+                className="w-full pl-9 pr-4 h-11 bg-light-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/5 focus:border-blue-500 transition-all text-primary-text placeholder:text-slate-400"
               />
             </div>
 
@@ -164,12 +167,12 @@ const Header = ({ title, description, onMenuClick }: HeaderProps) => {
               onClick={() => setIsSearchOpen(!isSearchOpen)}
               className="p-2 text-slate-500 hover:text-primary-text hover:bg-light-background rounded-lg transition-colors cursor-pointer lg:hidden"
             >
-              <Search className="w-5 h-5" />
+              <Search className="size-6" />
             </button>
 
             {/* Mobile/Tablet Search Popover */}
             {isSearchOpen && (
-              <div className="absolute left-0 right-0 sm:left-0 sm:right-auto top-full mt-2 w-auto sm:w-72 bg-primary-background border border-border rounded-lg p-2 z-50 shadow-lg animate-in fade-in zoom-in-95 duration-100 lg:hidden">
+              <div className="absolute left-0 right-0 sm:left-auto sm:right-0 top-full mt-2 sm:mt-7 w-auto sm:w-72 bg-primary-background border border-border rounded-lg p-2 z-50 shadow-lg animate-in fade-in zoom-in-95 duration-100 lg:hidden">
                 <div className="relative">
                   <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                     <Search className="w-5 h-5 text-slate-400" />
@@ -186,12 +189,12 @@ const Header = ({ title, description, onMenuClick }: HeaderProps) => {
           </div>
 
           {/* Notifications Dropdown Container */}
-          <div className="static sm:relative" ref={notifRef}>
+          <div className="static sm:relative flex items-center h-full" ref={notifRef}>
             <button
               onClick={() => setIsNotifOpen(!isNotifOpen)}
-              className="p-2 text-slate-500 hover:text-primary-text hover:bg-light-background rounded-lg relative transition-colors cursor-pointer"
+              className="size-11 text-slate-500 hover:text-primary-text hover:bg-light-background rounded-lg relative transition-colors cursor-pointer flex items-center justify-center"
             >
-              <Bell className="w-5 h-5" />
+              <Bell className="size-6" />
               {unreadCount > 0 && (
                 <span className="absolute top-0.5 right-0.5 flex h-4.5 w-4.5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white scale-85 origin-top-right">
                   {unreadCount}
@@ -201,7 +204,7 @@ const Header = ({ title, description, onMenuClick }: HeaderProps) => {
 
             {/* Notification Dropdown Panel */}
             {isNotifOpen && (
-              <div className="absolute left-0 right-0 sm:left-auto sm:right-0 top-full mt-2 w-auto sm:w-80 bg-primary-background border border-border rounded-lg py-2 z-50 shadow-lg animate-in fade-in zoom-in-95 duration-100">
+              <div className="absolute left-0 right-0 sm:left-auto sm:right-0 top-full mt-2 sm:mt-8 w-auto sm:w-80 bg-primary-background border border-border rounded-lg py-2 z-50 shadow-lg animate-in fade-in zoom-in-95 duration-100">
                 <div className="flex items-center justify-between px-4 py-2 border-b border-border mb-1">
                   <p className="text-xs text-primary-text font-bold uppercase tracking-wider">
                     Notifications
@@ -277,7 +280,7 @@ const Header = ({ title, description, onMenuClick }: HeaderProps) => {
           <div className="h-6 w-[1px] bg-border"></div>
 
           {/* User Profile */}
-          <div className="static sm:relative flex items-center" ref={dropdownRef}>
+          <div className="static sm:relative flex items-center h-full" ref={dropdownRef}>
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               className="w-10 h-10 rounded-xl overflow-hidden border border-border transition-all focus:outline-none cursor-pointer flex items-center justify-center hover:ring-2 hover:ring-blue-500/20 bg-primary-background"
@@ -291,7 +294,7 @@ const Header = ({ title, description, onMenuClick }: HeaderProps) => {
 
             {/* Dropdown Menu - Light Theme Aesthetic matching Next.js */}
             {isDropdownOpen && (
-              <div className="absolute left-0 right-0 sm:left-auto sm:right-0 top-full mt-2 w-auto sm:w-72 bg-primary-background rounded-lg border border-border overflow-hidden z-[100] animate-in fade-in zoom-in-95 duration-200">
+              <div className="absolute left-0 right-0 sm:left-auto sm:-right-2 top-full mt-2 sm:mt-8 w-auto sm:w-72 bg-primary-background rounded-lg border border-border surface overflow-hidden z-[100] animate-in fade-in zoom-in-95 duration-200">
                 {/* Header */}
                 <div className="p-4 bg-light-background border-b border-border">
                   <div className="flex items-center gap-3">

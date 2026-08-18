@@ -16,17 +16,17 @@ export const ThemeToggle = ({ className }: { className?: string }) => {
       )}
       aria-label="Toggle theme"
     >
-      <div className="relative h-5 w-5 overflow-hidden">
+      <div className="relative size-6 overflow-hidden">
         <Sun
           className={cn(
-            "h-5 w-5 transition-all duration-500 absolute",
+            "size-6 transition-all duration-500 absolute",
             theme === "dark" ? "-top-full rotate-90 opacity-0" : "top-0 rotate-0 opacity-100",
             "text-amber-500"
           )}
         />
         <Moon
           className={cn(
-            "h-5 w-5 transition-all duration-500 absolute",
+            "size-6 transition-all duration-500 absolute",
             theme === "light" ? "top-full -rotate-90 opacity-0" : "top-0 rotate-0 opacity-100",
             "text-indigo-400"
           )}
